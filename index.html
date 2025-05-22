@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ASCII Christmas Tree Generator - A festive holiday decoration in your browser">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+    <meta name="color-scheme" content="light dark">
+    <title>ASCII Christmas Tree</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+        }
+        
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: Canvas;
+            color: CanvasText;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .tree-container {
+            margin: 2rem auto;
+        }
+
+        #tree-output {
+            font-family: monospace, 'Cascadia Mono', 'Liberation Mono', 'Menlo', 'Consolas', 'DejaVu Sans Mono', 'Courier New';
+            font-size: 1.2rem;
+            line-height: 1.4;
+            white-space: pre;
+            tab-size: 2;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: color-mix(in srgb, Canvas 95%, CanvasText);
+            text-align: left;
+            display: block;
+            margin: 0 auto;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ASCII Christmas Tree 🎄 </h1>
+    </header>
+    
+    <main>
+        <section class="tree-container" aria-label="Christmas tree display">
+            <pre id="tree-output" role="img" aria-label="ASCII art Christmas tree"></pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❄️ mind for next Christmas, during the summer 😎</p>
+    </footer>
+
+    <script>
+        function renderTree(height) {
+            const lines = [];
+            
+            // Build the tree in a single O(n) pass
+            for (let i = 0; i < height; i++) {
+                const spaces = ' '.repeat(height - i - 1);
+                const stars = '*'.repeat(2 * i + 1);
+                lines.push(spaces + stars);
+            }
+
+            // Add the trunk at the bottom, perfectly centered with a single '|'
+            const trunkSpaces = ' '.repeat(height - 1);
+            const trunk = trunkSpaces + '|';
+            lines.push(trunk, trunk);
+
+            return lines.join('\n');
+        }
+
+        // Initialize the tree
+        const outputEl = document.getElementById('tree-output');
+        if (outputEl) {
+            outputEl.textContent = renderTree(10);
+        }
+    </script>
+</body>
+</html>
